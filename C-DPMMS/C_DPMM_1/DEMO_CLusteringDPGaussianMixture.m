@@ -1,10 +1,7 @@
 clc;clear;close all
-
-
-
 addpath('/Users/congtian/Downloads/Project Code/Data');
 
-% % addpath('/Users/congtian/Downloads/Project Code/CVACaseStudy/CVACaseStudy/CVA function')
+
 
 load FaultyCase1
 load FaultyCase2
