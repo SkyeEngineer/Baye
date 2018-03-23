@@ -1,32 +1,32 @@
 clc;clear;close all
 addpath('/Users/congtian/Downloads/Project Code/Data');
-% % load labelleddata.mat
+load labelleddata.mat
 
-load Day2.mat
-Normal_120air_01water=Day2(5161:5761,:); %13:16:00-13:26:00
-Normal_150air_05water=Day2(10261:10801,:); %14:41:01-14:50:00
-
-% % % % Blockage_120air_01water=Day2(5762:9841,:); %13:26:01-14:34:00
+% % load Day2.mat
+% % Normal_120air_01water=Day2(5161:5761,:); %13:16:00-13:26:00
+% % Normal_150air_05water=Day2(10261:10801,:); %14:41:01-14:50:00
 % % 
-% % % % Blockage_150air_05water=Day2(10802:14581,:); %14:50:01-15:53:00
-% % % % Leakage_150air_05water=Day2(15001:17641,:); %16:00:00-16:44:00
-load Day3.mat
-
-D3_Normal_120air_01water=Day3(1501:2401,:); %10:25:00-10:40:00
-% % D3_Leakage_120air_01water=Day3(2402:5161); %10:40:01-11:26:00
-D3_Normal_150air_05water=Day3(5761:6901,:); %11:36:00-11:55:00
-D3_Leakage_150air_05water=Day3(6902:9421,:);%11:55:01-12:37:00
-D3_Diverted_120air_01water=[Day3(10204:13425,:);Day3(17101:18061,:)];%12:50-13:43:00, 14:45:00-15:01:00
-D3_Normal_150air_05water_1=Day3(18301:18601,:);%15:05:00-15:10:00
-D3_Diverted_150air_05water=Day3(18602: 21901,:); % 15:10:01-16:05:00
-
-Te_day3=[D3_Normal_120air_01water; D3_Normal_150air_05water;D3_Leakage_150air_05water; ...
-         D3_Diverted_120air_01water; D3_Normal_150air_05water_1 ;...
-         D3_Diverted_150air_05water];
-load Day4.mat
-
-NormalSlugging=Day4;
-  
+% % % % % % Blockage_120air_01water=Day2(5762:9841,:); %13:26:01-14:34:00
+% % % % 
+% % % % % % Blockage_150air_05water=Day2(10802:14581,:); %14:50:01-15:53:00
+% % % % % % Leakage_150air_05water=Day2(15001:17641,:); %16:00:00-16:44:00
+% % load Day3.mat
+% % 
+% % D3_Normal_120air_01water=Day3(1501:2401,:); %10:25:00-10:40:00
+% % % % D3_Leakage_120air_01water=Day3(2402:5161); %10:40:01-11:26:00
+% % D3_Normal_150air_05water=Day3(5761:6901,:); %11:36:00-11:55:00
+% % D3_Leakage_150air_05water=Day3(6902:9421,:);%11:55:01-12:37:00
+% % D3_Diverted_120air_01water=[Day3(10204:13425,:);Day3(17101:18061,:)];%12:50-13:43:00, 14:45:00-15:01:00
+% % D3_Normal_150air_05water_1=Day3(18301:18601,:);%15:05:00-15:10:00
+% % D3_Diverted_150air_05water=Day3(18602: 21901,:); % 15:10:01-16:05:00
+% % 
+% % Te_day3=[D3_Normal_120air_01water; D3_Normal_150air_05water;D3_Leakage_150air_05water; ...
+% %          D3_Diverted_120air_01water; D3_Normal_150air_05water_1 ;...
+% %          D3_Diverted_150air_05water];
+% % load Day4.mat
+% % 
+% % NormalSlugging=Day4;
+% %   
 
 %%
 da=1;dw=6;% dim index of water and air
@@ -49,8 +49,8 @@ FaultName={'Blockage_120air_01water','Blockage_150air_05water',...
    'Diverted_120air_01water','Diverted_150air_05water',...
    'Leakage_120air_01water','Leakage_150air_05water',...
    'NormalSlugging'};
-len=1:length(Te_day3);
-TeX=Te_day3(len,vIndex)';
+len=1:length(Leakage_150air_05water);
+TeX=Leakage_150air_05water(len,vIndex)';
 %%% Max-Min normalization
 Data=Training(vIndex,:);
 Max=max(Data'); Min=min(Data');
@@ -78,33 +78,33 @@ Te=bsxfun(@rdivide,numerator1,denominator');
 
 %% C-DPMMs: Clustering based on Dirichlet Process Mixture Mdoels
 %%% Clustering normal data
-[c_st, record, similarity,p_mu,p_sig,p_isig,ind1,cls_size] = gibbsDPM(Training,da,dw,y,hyperG0, alpha, niter, type_algo, doPlot);
- 
-% % % % % Plot air and water flow
-c_est0=record(:,1);
-c_est=record(:,2);
-figure('Name','Air and Water flow plots','NumberTitle','off');
-yyaxis left
-plot(1:length(Training),Training(da,:));
-xlabel('Time(s)')
-ylabel('Air Flow')
-title('Air and Water flow data')
-yyaxis right
-plot(1:length(Training),Training(dw,:));
-ylabel('Water Flow')
-hold on
-plot(1:length(c_est),c_est,'k')
-ylabel('Water Flow')
-legend('Air flow','Water flow','Clusters')
-hold off
-print('cls','-depsc')
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% saving training results
-save('ind1.mat','ind1');
-save('p_mu.mat','p_mu');
-save('p_sig.mat','p_sig');
-save('p_isig.mat','p_isig');
-save('cls_size.mat','cls_size');
+% % [c_st, record, similarity,p_mu,p_sig,p_isig,ind1,cls_size] = gibbsDPM(Training,da,dw,y,hyperG0, alpha, niter, type_algo, doPlot);
+% %  
+% % % % % % % Plot air and water flow
+% % c_est0=record(:,1);
+% % c_est=record(:,2);
+% % figure('Name','Air and Water flow plots','NumberTitle','off');
+% % yyaxis left
+% % plot(1:length(Training),Training(da,:));
+% % xlabel('Time(s)')
+% % ylabel('Air Flow')
+% % title('Air and Water flow data')
+% % yyaxis right
+% % plot(1:length(Training),Training(dw,:));
+% % ylabel('Water Flow')
+% % hold on
+% % plot(1:length(c_est),c_est,'k')
+% % ylabel('Water Flow')
+% % legend('Air flow','Water flow','Clusters')
+% % hold off
+% % print('cls','-depsc')
+% % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % %% saving training results
+% % save('ind1.mat','ind1');
+% % save('p_mu.mat','p_mu');
+% % save('p_sig.mat','p_sig');
+% % save('p_isig.mat','p_isig');
+% % save('cls_size.mat','cls_size');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -123,14 +123,6 @@ save('cls_size.mat','cls_size');
 % %     cs{2,i}=length(cs{1,i});
 % % end
 % % sort(cs{2,:},'descend')
-
-
-
-
-
-
-
-
 
 
 
@@ -211,3 +203,10 @@ title('CVA-Q')
 % % print('Fault Detection Results','-depsc')
 saveas(gcf,'C-DPMMs.png')
 
+%% Detection Rate
+CRate=length(find(rs==1))/length(rs);
+T2Rate=length(find(T2mon==1))/length(T2mon);
+QRate=length(find(Qmon==1))/length(Qmon);
+
+disp(['Detection rates of C-DPMM, T2 and Q are respectively:              '...
+    num2str(CRate),'   ', num2str(T2Rate),'   ', num2str(QRate)]);
