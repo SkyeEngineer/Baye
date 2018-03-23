@@ -1,8 +1,6 @@
 clc;clear;close all
 addpath('/Users/congtian/Downloads/Project Code/Data');
 
-
-
 load FaultyCase1
 load FaultyCase2
 load FaultyCase3
