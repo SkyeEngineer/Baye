@@ -1,6 +1,6 @@
 clc;clear;close all
 % % % training data from day2 tesing on day3 and day4
-addpath('/Users/congtian/Downloads/Project Code/Data');
+% % addpath('/Users/congtian/Downloads/Project Code/Data');
 % % load labelleddata.mat
 % % load T1.mat
 % % load T2.mat
