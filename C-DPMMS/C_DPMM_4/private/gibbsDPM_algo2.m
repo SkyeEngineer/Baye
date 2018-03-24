@@ -27,7 +27,7 @@ m=zeros(1,n);
 c = zeros(n, 1);
 % Initialisation
 for k=1:n
-    c(k) = ceil(30*rand); %randi(n); % Sample new allocation uniform
+    c(k) = randi(n); ceil(30*rand); % Sample new allocation uniform
     m(c(k)) = m(c(k)) + 1;
     if m(c(k))>1
         U_SS(c(k)) = update_SS(y(:,k), U_SS(c(k)));
@@ -124,6 +124,7 @@ function some_plot(rawdata,da,dw, z, U_mu, m, c, k, i, cmap)
 %         m(ind)
         hold off
 %         length(ind)
+% % subplot(2,1,1)
         for j=1:length(ind)
             plot(rawdata(da,c==ind(j)),rawdata(dw,c==ind(j)),'.','color',cmap(mod(5*ind(j),63)+1,:), 'markersize', 15);        
             hold on
@@ -141,4 +142,23 @@ function some_plot(rawdata,da,dw, z, U_mu, m, c, k, i, cmap)
         xlim([minair maxwair]);
         ylim([minwater maxwater]);
         pause(.01)
+        
+% % hold off       
+% % subplot(2,1,2)
+% %       
+% % % % figure('Name','Air and Water flow plots','NumberTitle','off');
+% % yyaxis left
+% % plot(1:length(rawdata),rawdata(dw,:));
+% % xlabel('Time(s)')
+% % ylabel('Water Flow')
+% % title('Air and Water flow data')
+% % hold on
+% % yyaxis right
+% % plot(1:length(rawdata),rawdata(da,:));
+% % ylabel('Air Flow')
+% % hold on
+% % plot(1:length(c),c,'k')
+% % ylabel('Water Flow')
+% % legend('Air flow','Water flow','Clusters')
+% % pause(5)
 end

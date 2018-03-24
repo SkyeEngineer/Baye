@@ -1,36 +1,37 @@
 clc;clear;close all
-% % % training data combined from day2 & day3 tesing on all types of faults
+% % % training data from day2 tesing on day3 and day4
 addpath('/Users/congtian/Downloads/Project Code/Data');
-load labelleddata.mat
+% % load labelleddata.mat
 % % load T1.mat
 % % load T2.mat
 % % load X.mat
 
-% % load Day2.mat
-% % Normal_120air_01water=Day2(5161:5761,:); %13:16:00-13:26:00
-% % Normal_150air_05water=Day2(10261:10801,:); %14:41:01-14:50:00
-% % 
-% % % % % % Blockage_120air_01water=Day2(5762:9841,:); %13:26:01-14:34:00
-% % % % 
-% % % % % % Blockage_150air_05water=Day2(10802:14581,:); %14:50:01-15:53:00
-% % % % % % Leakage_150air_05water=Day2(15001:17641,:); %16:00:00-16:44:00
-% % load Day3.mat
-% % 
-% % D3_Normal_120air_01water=Day3(1501:2401,:); %10:25:00-10:40:00
-% % % % D3_Leakage_120air_01water=Day3(2402:5161); %10:40:01-11:26:00
-% % D3_Normal_150air_05water=Day3(5761:6901,:); %11:36:00-11:55:00
-% % D3_Leakage_150air_05water=Day3(6902:9421,:);%11:55:01-12:37:00
-% % D3_Diverted_120air_01water=[Day3(10204:13425,:);Day3(17101:18061,:)];%12:50-13:43:00, 14:45:00-15:01:00
-% % D3_Normal_150air_05water_1=Day3(18301:18601,:);%15:05:00-15:10:00
-% % D3_Diverted_150air_05water=Day3(18602: 21901,:); % 15:10:01-16:05:00
-% % 
-% % Te_day3=[D3_Normal_120air_01water; D3_Normal_150air_05water;D3_Leakage_150air_05water; ...
-% %          D3_Diverted_120air_01water; D3_Normal_150air_05water_1 ;...
-% %          D3_Diverted_150air_05water];
-% % load Day4.mat
-% % 
-% % NormalSlugging=Day4;
-% %   
+load Day2.mat
+Normal_120air_01water=Day2(5161:5761,:); %13:16:00-13:26:00
+Normal_150air_05water=Day2(10261:10801,:); %14:41:01-14:50:00
+
+D2_Blockage_120air_01water=Day2(5762:9841,:); %13:26:01-14:34:00
+
+D2_Blockage_150air_05water=Day2(10802:14581,:); %14:50:01-15:53:00
+D2_Leakage_150air_05water=Day2(15001:17641,:); %16:00:00-16:44:00
+load Day3.mat
+
+D3_Normal_120air_01water=Day3(1501:2401,:); %10:25:00-10:40:00
+D3_Leakage_120air_01water=Day3(2402:5161,:); %10:40:01-11:26:00
+D3_Normal_150air_05water=Day3(5761:6901,:); %11:36:00-11:55:00
+D3_Leakage_150air_05water=Day3(6902:9421,:);%11:55:01-12:37:00
+D3_Diverted_120air_01water=[Day3(10204:13425,:);Day3(17101:18061,:)];%12:50-13:43:00, 14:45:00-15:01:00
+D3_Normal_150air_05water_1=Day3(18301:18601,:);%15:05:00-15:10:00
+D3_Diverted_150air_05water=Day3(18602: 21901,:); % 15:10:01-16:05:00
+
+Te_day3=[D3_Normal_120air_01water;D3_Leakage_120air_01water;...
+         D3_Normal_150air_05water;D3_Leakage_150air_05water; ...
+         D3_Diverted_120air_01water; D3_Normal_150air_05water_1 ;...
+         D3_Diverted_150air_05water];
+load Day4.mat
+
+NormalSlugging=Day4;
+  
 
 %%
 da=1;dw=6;% dim index of water and air
@@ -53,8 +54,8 @@ FaultName={'Blockage_120air_01water','Blockage_150air_05water',...
    'Diverted_120air_01water','Diverted_150air_05water',...
    'Leakage_120air_01water','Leakage_150air_05water',...
    'NormalSlugging'};
-len=1:length(Diverted_120air_01water);
-TeX=Diverted_120air_01water(len,vIndex)';
+len=1:length(Te_day3);
+TeX=Te_day3(len,vIndex)';
 %%% Max-Min normalization
 Data=Training(vIndex,:);
 Max=max(Data'); Min=min(Data');
