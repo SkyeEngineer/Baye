@@ -1,6 +1,6 @@
 clc;clear;close all
 % % % training data from day2 tesing on day3 and day4
- addpath('/Users/congtian/Downloads/Project Code/Data');
+addpath('/Users/congtian/Downloads/Project Code/Data');
 % % load labelleddata.mat
 % % load T1.mat
 % % load T2.mat
@@ -33,13 +33,14 @@ load Day4.mat
 NormalSlugging=Day4;
   
 
-%%
-da=1;dw=6;% dim index of water and air
+
 %% Section 1 Parameters settings
 vIndex = 1:17; % measurement index
+da=1;dw=6;% dim index of water and air
+
 %%% Section 1.1 CVA parameter
 cva_alpha = 0.99;  % confidence level
-n=2; %n = 25;        % retained state dimension
+n=25;        % retained state dimension
 p = 15;        % length of past observation
 f = 15;        % length of future observation
 
@@ -111,23 +112,6 @@ save('p_sig.mat','p_sig');
 save('p_isig.mat','p_isig');
 save('cls_size.mat','cls_size');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-%% three y axises plot
-% % ylabels{1}='Air flow';
-% % ylabels{2}='Water flow';
-% % ylabels{3}='Cluster lables';
-% % [ax,hlines] = plotyyy(1:length(Data),Data(8,:),1:length(Data),Data(9,:),1:length(Data),c_est,ylabels)
-% % save('DPMMC_results.mat','c_est');
-
-% % ncls=length(unique(c_est));
-% % cs=cell(2,ncls);
-% % for i=1:ncls
-% %     cs{1,i}=find(c_est==i);
-% %     cs{2,i}=length(cs{1,i});
-% % end
-% % sort(cs{2,:},'descend')
 
 
 

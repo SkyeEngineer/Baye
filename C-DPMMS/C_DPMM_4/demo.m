@@ -2,43 +2,15 @@ clc;clear;close all
 % % % training data combined from day2 & day3 tesing on all types of faults
 addpath('/Users/congtian/Downloads/Project Code/Data');
 load labelleddata.mat
-% % load T1.mat
-% % load T2.mat
-% % load X.mat
 
-% % load Day2.mat
-% % Normal_120air_01water=Day2(5161:5761,:); %13:16:00-13:26:00
-% % Normal_150air_05water=Day2(10261:10801,:); %14:41:01-14:50:00
-% % 
-% % % % % % Blockage_120air_01water=Day2(5762:9841,:); %13:26:01-14:34:00
-% % % % 
-% % % % % % Blockage_150air_05water=Day2(10802:14581,:); %14:50:01-15:53:00
-% % % % % % Leakage_150air_05water=Day2(15001:17641,:); %16:00:00-16:44:00
-% % load Day3.mat
-% % 
-% % D3_Normal_120air_01water=Day3(1501:2401,:); %10:25:00-10:40:00
-% % % % D3_Leakage_120air_01water=Day3(2402:5161); %10:40:01-11:26:00
-% % D3_Normal_150air_05water=Day3(5761:6901,:); %11:36:00-11:55:00
-% % D3_Leakage_150air_05water=Day3(6902:9421,:);%11:55:01-12:37:00
-% % D3_Diverted_120air_01water=[Day3(10204:13425,:);Day3(17101:18061,:)];%12:50-13:43:00, 14:45:00-15:01:00
-% % D3_Normal_150air_05water_1=Day3(18301:18601,:);%15:05:00-15:10:00
-% % D3_Diverted_150air_05water=Day3(18602: 21901,:); % 15:10:01-16:05:00
-% % 
-% % Te_day3=[D3_Normal_120air_01water; D3_Normal_150air_05water;D3_Leakage_150air_05water; ...
-% %          D3_Diverted_120air_01water; D3_Normal_150air_05water_1 ;...
-% %          D3_Diverted_150air_05water];
-% % load Day4.mat
-% % 
-% % NormalSlugging=Day4;
-% %   
 
-%%
-da=1;dw=6;% dim index of water and air
+
 %% Section 1 Parameters settings
 vIndex = 1:17; % measurement index
+da=1;dw=6;% dim index of water and air
 %%% Section 1.1 CVA parameter
 cva_alpha = 0.99;  % confidence level
-n=2; %n = 25;        % retained state dimension
+n=25;        % retained state dimension
 p = 15;        % length of past observation
 f = 15;        % length of future observation
 
@@ -98,7 +70,7 @@ plot(1:length(Training),Training(dw,:));
 ylabel('Water Flow')
 hold on
 plot(1:length(c_est),c_est,'k')
-ylabel('Water Flow')
+ylabel('Cluster No.')
 legend('Air flow','Water flow','Clusters')
 hold off
 print('cls','-depsc')
@@ -141,7 +113,7 @@ load p_sig.mat
 cl=zeros(ns,niter);
 rs=zeros(1,ns);
 % %     figure('Name','Fault Detection Results')
-    disp('Detecting..........')
+disp('Detecting..........')
 for i=1:ns
     for j=1:niter
          cl(i,j) = detection(ind1,alpha, Te(:,i), hyperG0, p_mu, p_sig,p_isig,cls_size);
