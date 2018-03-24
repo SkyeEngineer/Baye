@@ -73,7 +73,6 @@ plot(1:length(Training),Training(dw,:));
 ylabel('Water Flow')
 hold on
 plot(1:length(c_est),c_est,'k')
-ylabel('Cluster No.')
 legend('Air flow','Water flow','Clusters')
 hold off
 print('cls','-depsc')
