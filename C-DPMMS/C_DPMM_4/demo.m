@@ -1,6 +1,9 @@
 clc;clear;close all
 % % % training data combined from day2 & day3 tesing on all types of faults
-addpath('/Users/congtian/Downloads/Project Code/Data');
+addpath(genpath(pwd));
+addpath(genpath(pwd),'helpfunctions');
+addpath(genpath(pwd),'data');
+
 load labelleddata.mat
 
 

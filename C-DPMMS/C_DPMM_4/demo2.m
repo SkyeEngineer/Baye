@@ -1,6 +1,8 @@
 clc;clear;close all
 % % % clustering normal data
-addpath('/Users/congtian/Downloads/Project Code/Data');
+addpath(genpath(pwd));
+addpath(genpath(pwd),'helpfunctions');
+addpath(genpath(pwd),'data');
 load labelleddata.mat
 
 
