@@ -5,6 +5,7 @@ addpath(genpath(pwd),'helpfunctions');
 addpath(genpath(pwd),'data');
 
 load labelleddata.mat
+load Leakage_120air_01water.mat
 
 
 
@@ -28,8 +29,8 @@ FaultName={'Blockage_120air_01water','Blockage_150air_05water',...
    'Diverted_120air_01water','Diverted_150air_05water',...
    'Leakage_120air_01water','Leakage_150air_05water',...
    'NormalSlugging'};
-len=1:length(Diverted_120air_01water);
-TeX=Diverted_120air_01water(len,vIndex)';
+len=1:length(Leakage_120air_01water);
+TeX=Leakage_120air_01water(len,vIndex)';
 %%% Max-Min normalization
 Data=Training(vIndex,:);
 Max=max(Data'); Min=min(Data');
@@ -57,32 +58,32 @@ Te=bsxfun(@rdivide,numerator1,denominator');
 
 %% C-DPMMs: Clustering based on Dirichlet Process Mixture Mdoels
 % % %%% Clustering normal data
-[c_st, record, similarity,p_mu,p_sig,p_isig,ind1,cls_size] = gibbsDPM(Training,da,dw,y,hyperG0, alpha, niter, type_algo, doPlot);
- 
-% % % % % Plot air and water flow
-c_est0=record(:,1);
-c_est=record(:,2);
-figure('Name','Air and Water flow plots','NumberTitle','off');
-yyaxis left
-plot(1:length(Training),Training(da,:));
-xlabel('Time(s)')
-ylabel('Air Flow')
-title('Air and Water flow data')
-yyaxis right
-plot(1:length(Training),Training(dw,:));
-ylabel('Water Flow')
-hold on
-plot(1:length(c_est),c_est,'k')
-legend('Air flow','Water flow','Clusters')
-hold off
-print('cls','-depsc')
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% saving training results
-save('ind1.mat','ind1');
-save('p_mu.mat','p_mu');
-save('p_sig.mat','p_sig');
-save('p_isig.mat','p_isig');
-save('cls_size.mat','cls_size');
+% % [c_st, record, similarity,p_mu,p_sig,p_isig,ind1,cls_size] = gibbsDPM(Training,da,dw,y,hyperG0, alpha, niter, type_algo, doPlot);
+% %  
+% % % % % % % Plot air and water flow
+% % c_est0=record(:,1);
+% % c_est=record(:,2);
+% % figure('Name','Air and Water flow plots','NumberTitle','off');
+% % yyaxis left
+% % plot(1:length(Training),Training(da,:));
+% % xlabel('Time(s)')
+% % ylabel('Air Flow')
+% % title('Air and Water flow data')
+% % yyaxis right
+% % plot(1:length(Training),Training(dw,:));
+% % ylabel('Water Flow')
+% % hold on
+% % plot(1:length(c_est),c_est,'k')
+% % legend('Air flow','Water flow','Clusters')
+% % hold off
+% % print('cls','-depsc')
+% % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % %% saving training results
+% % save('ind1.mat','ind1');
+% % save('p_mu.mat','p_mu');
+% % save('p_sig.mat','p_sig');
+% % save('p_isig.mat','p_isig');
+% % save('cls_size.mat','cls_size');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -121,7 +122,7 @@ for i=1:ns
          cl(i,j) = detection(ind1,alpha, Te(:,i), hyperG0, p_mu, p_sig,p_isig,cls_size);
     end 
 
-    rs(i)=~ismember(mode(cl(i,10:end),2),ind1);
+    rs(i)=~ismember(mode(cl(i,1:end),2),ind1);
 % %     hold on;
 % %     plot(i,rs(i),'or','MarkerSize',5,'MarkerFaceColor','r')
 % %     xlabel('Time(s)');ylabel('Results')
@@ -179,12 +180,12 @@ ylim([0-0.5 1+0.5]);
 title('CVA-Q')
 
 % % print('Fault Detection Results','-depsc')
-saveas(gcf,'C-DPMMs.png')
+saveas(gcf,'Comparsion.png')
 
 %% Detection Rate
 CRate=length(find(rs==1))/length(rs);
-T2Rate=length(find(T2mon==1))/length(T2mon);
-QRate=length(find(Qmon==1))/length(Qmon);
+T2Rate=length(find(T2mon==1))/length(rs);
+QRate=length(find(Qmon==1))/length(rs);
 
 disp(['Detection rates of C-DPMM, T2 and Q are respectively:              '...
     num2str(CRate),'   ', num2str(T2Rate),'   ', num2str(QRate)]);
