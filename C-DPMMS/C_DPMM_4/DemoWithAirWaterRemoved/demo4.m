@@ -1,16 +1,16 @@
 clc;clear;close all
 % % % training data combined from day2 & day3 tesing on all types of faults
+cd ..
 addpath(genpath(pwd));
 addpath(genpath(pwd),'helpfunctions');
 addpath(genpath(pwd),'data');
 
 load labelleddata.mat
-
+load Training
 
 
 %% Section 1 Parameters settings
-% vIndex =[2,3,4,5,7:17];
-vIndex =[1:17];% measurement index; remove air/water input flow rate
+vIndex = 1:17; % measurement index
 da=1;dw=6;% dim index of water and air
 %%% Section 1.1 CVA parameter
 cva_alpha = 0.99;  % confidence level
@@ -29,8 +29,8 @@ FaultName={'Blockage_120air_01water','Blockage_150air_05water',...
    'Diverted_120air_01water','Diverted_150air_05water',...
    'Leakage_120air_01water','Leakage_150air_05water',...
    'NormalSlugging'};
-len=1:length(Diverted_150air_05water);
-TeX=Diverted_150air_05water(len,vIndex)';
+len=1:length(NormalSlugging);
+TeX=NormalSlugging(len,vIndex)';
 %%% Max-Min normalization
 Data=Training(vIndex,:);
 Max=max(Data'); Min=min(Data');
@@ -51,40 +51,40 @@ niter = 20; % Number of iterations
 doPlot = 2;% do some plots
 type_algo = 'CRP'; % other algorithms: 'CRP', 'collapsesCRP', 'slicesampler'
 
-numerator1=bsxfun(@minus, TeX(:,:), Min');
+numerator1=bsxfun(@minus, TeX(vIndex,:), Min');
 Te=bsxfun(@rdivide,numerator1,denominator');
 [dim, ns]=size(Te);
 
 
 %% C-DPMMs: Clustering based on Dirichlet Process Mixture Mdoels
 % % %%% Clustering normal data
-[c_st, record, similarity,p_mu,p_sig,p_isig,ind1,cls_size] = gibbsDPM(Training,da,dw,y,hyperG0, alpha, niter, type_algo, doPlot);
- 
-% % % % % Plot air and water flow
-c_est0=record(:,1);
-c_est=record(:,2);
-figure('Name','Air and Water flow plots','NumberTitle','off');
-yyaxis left
-plot(1:length(Training),Training(da,:));
-xlabel('Time(s)')
-ylabel('Air Flow')
-title('Air and Water flow data')
-yyaxis right
-plot(1:length(Training),Training(dw,:));
-ylabel('Water Flow')
-hold on
-plot(1:length(c_est),c_est,'k')
-legend('Air flow','Water flow','Clusters')
-hold off
-print('cls','-depsc')
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% saving training results
-cd ..
-save('ind1.mat','ind1');
-save('p_mu.mat','p_mu');
-save('p_sig.mat','p_sig');
-save('p_isig.mat','p_isig');
-save('cls_size.mat','cls_size');
+% % [c_st, record, similarity,p_mu,p_sig,p_isig,ind1,cls_size] = gibbsDPM(Training,da,dw,y,hyperG0, alpha, niter, type_algo, doPlot);
+% %  
+% % % % % % % Plot air and water flow
+% % c_est0=record(:,1);
+% % c_est=record(:,2);
+% % figure('Name','Air and Water flow plots','NumberTitle','off');
+% % yyaxis left
+% % plot(1:length(Training),Training(da,:));
+% % xlabel('Time(s)')
+% % ylabel('Air Flow')
+% % title('Air and Water flow data')
+% % yyaxis right
+% % plot(1:length(Training),Training(dw,:));
+% % ylabel('Water Flow')
+% % hold on
+% % plot(1:length(c_est),c_est,'k')
+% % legend('Air flow','Water flow','Clusters')
+% % hold off
+% % print('cls','-depsc')
+% % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % %% saving training results
+% % cd ..
+% % save('ind1.mat','ind1');
+% % save('p_mu.mat','p_mu');
+% % save('p_sig.mat','p_sig');
+% % save('p_isig.mat','p_isig');
+% % save('cls_size.mat','cls_size');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -185,8 +185,8 @@ saveas(gcf,'C-DPMMs.png')
 
 %% Detection Rate
 CRate=length(find(rs==1))/length(rs);
-T2Rate=length(find(T2mon==1))/length(T2mon);
-QRate=length(find(Qmon==1))/length(Qmon);
+T2Rate=length(find(T2mon==1))/length(rs);
+QRate=length(find(Qmon==1))/length(rs);
 
 disp(['Detection rates of C-DPMM, T2 and Q are respectively:              '...
     num2str(CRate),'   ', num2str(T2Rate),'   ', num2str(QRate)]);

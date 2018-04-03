@@ -1,5 +1,6 @@
 clc;clear;close all
 % % % clustering normal data
+cd ..
 addpath(genpath(pwd));
 addpath(genpath(pwd),'helpfunctions');
 addpath(genpath(pwd),'data');
@@ -80,6 +81,7 @@ hold off
 print('cls','-depsc')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% saving training results
+cd ..
 save('ind1.mat','ind1');
 save('p_mu.mat','p_mu');
 save('p_sig.mat','p_sig');

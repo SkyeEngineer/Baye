@@ -5,7 +5,6 @@ clc;clear;close all
 % % load T1.mat
 % % load T2.mat
 % % load X.mat
-cd ..
 addpath(genpath(pwd));
 addpath(genpath(pwd),'helpfunctions');
 addpath(genpath(pwd),'data');
@@ -109,6 +108,7 @@ hold off
 print('cls','-depsc')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% saving training results
+cd ..
 save('ind1.mat','ind1');
 save('p_mu.mat','p_mu');
 save('p_sig.mat','p_sig');
@@ -197,8 +197,8 @@ saveas(gcf,'C-DPMMs.png')
 
 %% Detection Rate
 CRate=length(find(rs==1))/length(rs);
-T2Rate=length(find(T2mon==1))/length(T2mon);
-QRate=length(find(Qmon==1))/length(Qmon);
+T2Rate=length(find(T2mon==1))/length(rs);
+QRate=length(find(Qmon==1))/length(rs);
 
 disp(['Detection rates of C-DPMM, T2 and Q are respectively:              '...
     num2str(CRate),'   ', num2str(T2Rate),'   ', num2str(QRate)]);

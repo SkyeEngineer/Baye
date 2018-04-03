@@ -1,5 +1,6 @@
 clc;clear;close all
 % % % clustering FlowConditon From Ruomu
+cd ..
 addpath(genpath(pwd));
 addpath(genpath(pwd),'helpfunctions');
 addpath(genpath(pwd),'data');
@@ -102,6 +103,7 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% saving training results
+cd ..
 save('ind1.mat','ind1');
 save('p_mu.mat','p_mu');
 save('p_sig.mat','p_sig');
