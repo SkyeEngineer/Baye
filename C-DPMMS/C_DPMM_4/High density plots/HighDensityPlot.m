@@ -139,15 +139,15 @@ axmin = datasubset(1)-1; axmax = datasubset(NR);
 % % yyaxis left
 for i = 1:NC
    plot(datasubset,trendmat(:,i)-offset*i,'k','linewidth',1)
-   text(axmax*1.01,-offset*i,num2str(i),'fontsize',20,'fontname',...
-		'helvetica','verticalalignment','middle','horizontalalignment','left')
+%    text(axmax*1.01,-offset*i,num2str(i),'fontsize',20,'fontname',...
+% 		'helvetica','verticalalignment','middle','horizontalalignment','left')
 end
 axis([axmin axmax -(NC+1)*offset 0]),grid
 % % set(gca,'YTick',[-NC*offset:offset:-offset])
 set(gca,'Yticklabel',tagnames(NC:-1:1))
 set(gca,'fontsize',14,'fontname','helvetica','linewidth',1.5,'box','on')
 xlabel('time/sample interval','fontsize',20,'fontname','helvetica')
- 
+
 
 if range == [2 inf],
    titletext = ['normalised trend ' filename ', no filtering'];
@@ -156,8 +156,9 @@ else
 end
 title(titletext,'fontsize',20,'fontname','helvetica')
 yyaxis right
-plot(1:length(clusters),clusters,'r','linewidth',1);
+plot(1:1:length(clusters),clusters,'r','linewidth',1);
 orient landscape  % optimize for printing
+print('High Density Plot','-depsc')
 
 %--------------------------------------------------------
 % PLOT AUTOCOVARIANCES

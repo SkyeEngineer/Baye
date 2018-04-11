@@ -26,6 +26,8 @@ if ndims(Sigma)==2
     % log(sqrt(Sigma))
     logSqrtDetSigma = sum(log(diag(R)));
     
+    
+    
 elseif ndims(Sigma)==3
     xstand = zeros(n,d);
     xstand1 = zeros(n,1);%test

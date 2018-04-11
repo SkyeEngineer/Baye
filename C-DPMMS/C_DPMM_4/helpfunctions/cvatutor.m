@@ -96,15 +96,15 @@ Qmon = sum(ek.*ek);     %Q statistic of test data
 
 %%
 %%%%%%%%%% PLOT RESULTS %%%%%%%%%%
-N=size(T2mon,2);
-figure;
-subplot(2,1,1),semilogy(1:N,T2mon,'b',[1 N],[Ta Ta],'r-.','linewidth',2); 
-ylabel('T^2'); 
-xlabel('Sample Number'); 
-
-subplot(2,1,2),semilogy(1:N,Qmon,'b',[1 N],[Qa Qa],'r-.','linewidth',2); 
-ylabel('SPE'); 
-xlabel('Sample Number'); 
+% % N=size(T2mon,2);
+% % figure;
+% % subplot(2,1,1),semilogy(1:N,T2mon,'b',[1 N],[Ta Ta],'r-.','linewidth',2); 
+% % ylabel('T^2'); 
+% % xlabel('Sample Number'); 
+% % 
+% % subplot(2,1,2),semilogy(1:N,Qmon,'b',[1 N],[Qa Qa],'r-.','linewidth',2); 
+% % ylabel('SPE'); 
+% % xlabel('Sample Number'); 
 
 end
 

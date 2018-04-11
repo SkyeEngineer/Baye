@@ -65,7 +65,7 @@ end
 c_est = c(:, ind);
 old_c_est=c_est;
 % Label clusters by decreasing cluster size
-ind1 = unique(c_est);
+ind1 = unique(c_est,'stable');
 J = length(ind1);
 clust_size = zeros(J, 1);
 for i=1:J
@@ -73,7 +73,10 @@ for i=1:J
 end
 [~, ind2] = sort(clust_size, 'descend');
 c2 = c_est;
+% % for j=1:J
+% %     c_est(c2==ind1(ind2(j))) = j;
+% % end
 for j=1:J
-    c_est(c2==ind1(ind2(j))) = j;
+    c_est(find(c_est==ind1(j)))=j;
 end
 rcd=[old_c_est c_est];
