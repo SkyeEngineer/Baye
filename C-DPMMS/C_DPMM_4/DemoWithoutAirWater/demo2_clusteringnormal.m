@@ -23,13 +23,13 @@ D3_3=Day3(18301:18601,:);%15:05:00-15:10:00 Normal_150air_05water_1
 
 
 %% Section 1 Parameters settings
-vIndex = [2,3,4,5,7:17]; % measurement index
+vIndex = [2,4,5,8:17]; % measurement index
 da=1;dw=6;% dim index of water and air
 %% Data
 %%% Training and Test Data
 
-% Training=[D3_2' D2_1' D3_1' D2_2' D3_3'];
-Training=Leakage_150air_05water';
+Training=[D3_2' D2_1' D3_1' D2_2' D3_3'];
+
 
 %%% Max-Min normalization
 Data=Training(vIndex,:);
